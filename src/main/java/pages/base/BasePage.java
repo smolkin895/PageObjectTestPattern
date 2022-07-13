@@ -4,10 +4,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterSuite;
 
 import java.time.Duration;
 
 import static constants.Constants.TimeOutVariable.EXPLICITLY_WAIT;
+import static common.Config.HOLD_BROWSER_OPEN;
 
 public class BasePage {
     protected WebDriver driver;
@@ -18,6 +20,12 @@ public class BasePage {
 
     public void open(String url){
         driver.get(url);
+    }
+    @AfterSuite
+    public void close(){
+        if(HOLD_BROWSER_OPEN){
+            driver.quit();
+        }
     }
 
     public WebElement waitElementVisible(WebElement element){
